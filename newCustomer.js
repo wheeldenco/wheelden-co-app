@@ -36,7 +36,7 @@ function createDiscount(customer, priceRule) {
 
 function createSubscriber(customer, discount) {
     return mailchimp.post(`/lists/${process.env.MAILCHIMP_DISCOUNT_LIST}/members`, {
-        email_address : `v${Date.now()}${customer.email}`,
+        email_address : customer.email,
         status : 'subscribed',
         merge_fields : {
             DISCOUNT : discount.code
