@@ -11,7 +11,7 @@ import express from 'express';
 import newCustomer from './newCustomer';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 app.get('/', (req, res) => res.status(401));
 
@@ -20,4 +20,4 @@ app.post('/newcustomer', function (req, res) {
     res.status(success ? 200 : 500);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`App listening on port ${port}!`))
