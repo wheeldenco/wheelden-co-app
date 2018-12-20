@@ -1,5 +1,7 @@
 const Shopify = require('shopify-api-node'); 
 const Mailchimp = require('mailchimp-api-v3');
+const Hashids = require('hashids');
+const hashids = new Hashids('NEWCUSTOMER');
 
 require('dotenv').config()
 
@@ -26,30 +28,31 @@ function createPriceRule(customer) {
     });
 }
 
-function createDiscount(customer) {
-    return shopify.discount.create(priceRule.id, {
-        code : customer.id
+function createDiscount(customer, priceRule) {
+    return shopify.discountCode.create(priceRule.id, {
+        code : `HELLO-${hashids.encode(customer.id + Date.now())}`
     });
 }
 
 function createSubscriber(customer, discount) {
     return mailchimp.post(`/lists/${process.env.MAILCHIMP_DISCOUNT_LIST}/members`, {
-        email_address : customer.email_address,
+        email_address : `v${Date.now()}${customer.email}`,
         status : 'subscribed',
         merge_fields : {
-            DISCOUNT : discount.id
+            DISCOUNT : discount.code
         }
     });
 }
 
 module.exports = async function(customer) {
 
+    if (!customer.tags.includes('new_customer')) return false;
+
     try {
-        console.log(customer);
-        return true;
         const priceRule = await createPriceRule(customer);
         const discount = await createDiscount(customer, priceRule);
-        const subscriber = await createSubscriber(customer, discount);
+        await createSubscriber(customer, discount);
+        return true;
 
     } catch (err) {
         console.error(err);

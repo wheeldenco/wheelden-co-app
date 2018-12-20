@@ -14,4 +14,9 @@ app.post('/newcustomer', function (req, res) {
     res.status(success ? 200 : 500).send();
 });
 
+app.get('/test', async (req, res) => {
+    const success = await newCustomer(require('./mock/customer.json'));
+    res.status(success ? 200 : 400).send();
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`))
