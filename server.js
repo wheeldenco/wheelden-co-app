@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.status(401).send('You shouldn\'t be here'));
 
 app.post('/newcustomer', function (req, res) {
-    console.log(req.body);
     const success = newCustomer(req.body);
     res.status(success ? 200 : 500).send();
 });

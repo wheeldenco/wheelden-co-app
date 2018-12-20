@@ -46,7 +46,7 @@ function createSubscriber(customer, discount) {
 
 module.exports = async function(customer) {
 
-    //if (!customer.tags.includes('new_customer')) return false;
+    if (!customer.tags.includes('new_customer')) return false;
 
     try {
         const priceRule = await createPriceRule(customer);
