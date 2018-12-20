@@ -1,14 +1,5 @@
-/*
-
-    1. Receive webhook from Shopify
-    2. Create a price rule (?)
-    3. Create discount code
-    4. Add subscriber to Mailchimp
-
-*/
-
-import express from 'express';
-import newCustomer from './newCustomer';
+const express = require('express');
+const newCustomer = require('./newCustomer');
 
 const app = express();
 const port = process.env.PORT || 8080;

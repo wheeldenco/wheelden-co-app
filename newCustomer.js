@@ -1,5 +1,5 @@
-import Shopify from 'shopify-api-node'; 
-import Mailchimp from 'mailchimp-api-v3';
+const Shopify = require('shopify-api-node'); 
+const Mailchimp = require('mailchimp-api-v3');
 
 require('dotenv').config()
 
@@ -42,7 +42,7 @@ function createSubscriber(customer, discount) {
     });
 }
 
-export default async function(customer) {
+module.exports = async function(customer) {
 
     try {
         console.log(customer);
