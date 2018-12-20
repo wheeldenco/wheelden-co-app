@@ -1,0 +1,17 @@
+{
+  "name": "wheeldenco-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Derek Wheelden",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mailchimp-api-v3": "^1.12.1",
+    "shopify-api-node": "^2.17.0"
+  }
+}
