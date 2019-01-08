@@ -2,6 +2,7 @@ const Shopify = require('shopify-api-node');
 const Mailchimp = require('mailchimp-api-v3');
 const Hashids = require('hashids');
 const hashids = new Hashids('NEWCUSTOMER');
+const logger = require('heroku-logger');
 
 require('dotenv').config()
 
@@ -45,17 +46,18 @@ function createSubscriber(customer, discount) {
 }
 
 module.exports = async function(customer) {
-
-    if (!customer.tags.includes('new_customer')) return false;
+    if (!customer.tags.includes('new_customer')) {
+        logger.warn('New customer missing tag', customer.tags);
+        return false;
+    }
 
     try {
         const priceRule = await createPriceRule(customer);
         const discount = await createDiscount(customer, priceRule);
         await createSubscriber(customer, discount);
         return true;
-
     } catch (err) {
-        console.error(err);
+        logger.error('Error creating new customer', err)
         return false;
     }
 
